@@ -97,20 +97,21 @@ export default App
 function List(params) {
   return (
     <>
-      {
+      {params.data != 0 ?
         params.data && params.data.map((element, index) => (
           <>
             <tr key={index}>
               <td>{element.name}</td>
               <td>{element.tally}</td>
-
-              {element.tally != null
-                ? <td>{element.tally < 0 ? <Naughty /> : <Nice />}</td>
-                : "-"
-              }
+              <td>{element.tally < 0 ? <Naughty /> : <Nice />}</td>
             </tr>
           </>
-        ))
+        )) :
+        <tr>
+          <td>Not Found</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
       }
     </>
   )
