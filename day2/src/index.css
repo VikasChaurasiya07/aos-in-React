@@ -34,7 +34,7 @@ img {
   left: 50%;
   top: 50%;
   background-color: #262626;
-  border-radius: 5px;
+  border-radius: 10px;
   transform: translate(-50%, -50%);
 }
 
@@ -44,7 +44,7 @@ button {
   border: none;
   font-weight: 600;
   font-size: 1.3rem;
-  padding: 1.3rem;
+  padding: 1.4rem 1.6rem;
   margin: 0 1rem;
-  border-radius: 5px;
+  border-radius: 10000px;
 }

@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    width: 98%;
+    width: 95%;
     margin: 0.3rem auto;
     display: flex;
     flex-flow: column wrap;
@@ -66,4 +66,9 @@ button {
     padding: 0.3rem 1rem;
 }
 
+@media (max-width: 900px) {
+    * {
+        font-size: 1rem;
+    }
+}
     
