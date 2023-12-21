@@ -1,0 +1,50 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+body {
+  background-color: black;
+  color: white;
+  overflow: hidden;
+}
+
+.container-full {
+  height: 100vh;
+  position: relative;
+}
+
+img {
+  position: absolute;
+  width: 200px;
+}
+
+.counter {
+  position: absolute;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  z-index: 999;
+  width: 400px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  background-color: #262626;
+  border-radius: 5px;
+  transform: translate(-50%, -50%);
+}
+
+button {
+  background-color: black;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 1.3rem;
+  padding: 1.3rem;
+  margin: 0 1rem;
+  border-radius: 5px;
+}
