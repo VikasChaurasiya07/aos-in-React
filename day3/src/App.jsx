@@ -1,33 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { useEffect } from "react"
+import { Doughnut } from "react-chartjs-2";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+  const [addData, setAddData] = useState([]);
+  const [weight, setWeight] = useState([]);
+
+  useEffect(() => {
+    dataFetch()
+  }, [])
+
+  async function dataFetch() {
+    const res = await fetch('https://advent.sveltesociety.dev/data/2023/day-three.json');
+    const data = await res.json();
+    setData([...data]);
+    const weightdata = data.map((item) => item.weight);
+    setWeight([...weightdata]);
+  }
+
+  function addToSeigh(params, index) {
+    setAddData([...addData, params])
+    const newdata = data.filter((_, i) => i != index);
+    setData([...newdata]);
+  }
+
+
+  function removeFromSeigh(params, index) {
+    setData([...data, params])
+    const newdata = addData.filter((_, i) => i != index);
+    setAddData([...newdata]);
+  }
+
+  let a = 0;
+  weight.forEach(item => {
+    a = a + item;
+  })
+
+  const weightTotal = a;
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <div className="datalist">
+          <ol>
+            {
+              data.map((item, index) => (
+                <li key={index}>
+                  <p>Name: {item.name}</p>
+                  <p>Weight: {item.weight}</p>
+                  <button onClick={() => addToSeigh(item, index)}>Add</button>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div className="addeditemlist">
+          <ol>
+            {
+              addData.map((item, index) => (
+                <li key={index}>
+                  <p>Name: {item.name}</p>
+                  <p>Weight: {item.weight}</p>
+                  <button onClick={() => removeFromSeigh(item, index)}>Remove</button>
+                </li>
+              ))
+            }
+          </ol>
+
+          <p>Total weight: {weightTotal}</p>
+        </div>
+
+        {/* <Doughnut  /> */}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
