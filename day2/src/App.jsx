@@ -36,6 +36,14 @@ function App() {
     }
   }
 
+  function reset() {
+    setCount(0);
+    const img = document.querySelectorAll("img");
+    img.forEach((element) => {
+      element.remove();
+    });
+  }
+
   return (
     <>
       <div className="counter">
@@ -44,6 +52,13 @@ function App() {
           <button onClick={randomCookie}>+</button>
           <button onClick={removeCookie}>-</button>
         </div>
+        <button
+          onClick={() => {
+            reset();
+          }}
+        >
+          Reset
+        </button>
       </div>
       <div className="container-full" ref={parent}>
         <div className="cookie-div">
