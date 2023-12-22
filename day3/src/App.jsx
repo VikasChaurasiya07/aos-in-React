@@ -88,7 +88,12 @@ function App() {
               <li key={index}>
                 <p>Name: {item.name}</p>
                 <p>Weight: {item.weight}</p>
-                <button onClick={() => addToSeigh(item, index)}>Add</button>
+                {
+                  weight > 100 ?
+                    <button disabled>Disabled</button>
+                    :
+                    <button onClick={() => addToSeigh(item, index)}>Add</button>
+                }
               </li>
             ))}
           </ol>
