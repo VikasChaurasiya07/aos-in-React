@@ -26,6 +26,8 @@ function App() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
 
+  const [avg, setAvg] = useState(0);
+
   useEffect(() => {
     async function datafetch() {
       if (count < 9) {
@@ -37,7 +39,20 @@ function App() {
         setCount(count + 1);
       }
     }
+
+    function average() {
+      let a = 0;
+      data.forEach((item) => {
+        a = a + item;
+      });
+
+      let averagevalue = a / count;
+
+      setAvg(parseInt(averagevalue));
+    }
+
     datafetch();
+    average();
   }, [data, count]);
 
   const options = {
@@ -78,7 +93,7 @@ function App() {
       <div className="container">
         <div className="chart">
           {data == 0 ? (
-            <p>Loding..</p>
+            <p className="loading">Loding..</p>
           ) : (
             <Line options={options} data={chatdata} />
           )}
@@ -86,6 +101,7 @@ function App() {
 
         <div className="info">
           <h1>The above graph shows Santa's heart rate data</h1>
+          <p>Average Heart rate Today: {avg}</p>
         </div>
       </div>
     </>
