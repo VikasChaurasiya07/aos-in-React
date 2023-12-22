@@ -33,7 +33,7 @@ img {
   height: 300px;
   left: 50%;
   top: 50%;
-  background-color: #262626;
+  background-color: #262626d9;
   border-radius: 10px;
   transform: translate(-50%, -50%);
 }
