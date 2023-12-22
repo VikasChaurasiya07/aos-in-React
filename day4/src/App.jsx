@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     async function datafetch() {
-      if (count < 9) {
+      if (count < 6) {
         const res = await fetch(
           "https://advent.sveltesociety.dev/data/2023/day-four.json"
         );
