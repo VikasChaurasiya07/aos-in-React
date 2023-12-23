@@ -24,19 +24,26 @@ ChartJS.register(
 
 function App() {
   const [data, setData] = useState([]);
-  const [count, setCount] = useState(0);
 
   const [avg, setAvg] = useState(0);
 
   useEffect(() => {
     async function datafetch() {
-      if (count < 6) {
+      if (data.length < 2) {
         const res = await fetch(
           "https://advent.sveltesociety.dev/data/2023/day-four.json"
         );
         const response = await res.json();
         setData([...data, response.heartRate]);
-        setCount(count + 1);
+      } else if (data.length < 10) {
+        setTimeout(async () => {
+          const res = await fetch(
+            "https://advent.sveltesociety.dev/data/2023/day-four.json"
+          );
+          const response = await res.json();
+          setData([...data, response.heartRate]);
+          average();
+        }, 4000);
       }
     }
 
@@ -46,14 +53,14 @@ function App() {
         a = a + item;
       });
 
-      let averagevalue = a / count;
+      let averagevalue = a / data.length;
 
       setAvg(parseInt(averagevalue));
     }
 
     datafetch();
     average();
-  }, [data, count]);
+  }, [data]);
 
   const options = {
     responsive: true,
@@ -69,13 +76,7 @@ function App() {
   };
 
   const chatdata = {
-    labels: [
-      "5 hour ago",
-      "4 hour ago",
-      "3 hour ago",
-      "2 hour ago",
-      "1 hour ago",
-    ],
+    labels: "          ",
     datasets: [
       {
         label: "Santa's Heart Rate",
@@ -83,7 +84,7 @@ function App() {
         fill: false,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        tension: 0.3,
+        tension: 0.2,
       },
     ],
   };
