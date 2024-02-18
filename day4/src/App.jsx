@@ -29,21 +29,12 @@ function App() {
 
   useEffect(() => {
     async function datafetch() {
-      if (data.length < 2) {
+      if (data.length < 10) {
         const res = await fetch(
           "https://advent.sveltesociety.dev/data/2023/day-four.json"
         );
         const response = await res.json();
         setData([...data, response.heartRate]);
-      } else if (data.length < 10) {
-        setTimeout(async () => {
-          const res = await fetch(
-            "https://advent.sveltesociety.dev/data/2023/day-four.json"
-          );
-          const response = await res.json();
-          setData([...data, response.heartRate]);
-          average();
-        }, 4000);
       }
     }
 

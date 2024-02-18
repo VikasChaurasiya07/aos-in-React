@@ -39,9 +39,9 @@ function App() {
   function reset() {
     setCount(0);
     const img = document.querySelectorAll("img");
-    img.forEach((element) => {
-      element.remove();
-    });
+    for (const item of img) {
+      item.remove();
+    }
   }
 
   return (

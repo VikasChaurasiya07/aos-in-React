@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function App() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [catagories, setCatagories] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [searchFilterData, setSearchFilterData] = useState("");
@@ -42,7 +42,6 @@ function App() {
 
   function searchName() {
     const searchnamedata =
-      data &&
       data.filter((element) =>
         element.name
           .toLocaleLowerCase()
@@ -69,7 +68,7 @@ function App() {
                 }}
               />
             </label>
-
+            <br/>
             <label htmlFor="catagories">
               Search Catagories:
               <select
@@ -105,7 +104,6 @@ function List(params) {
   return (
     <>
       {params.data != 0 ? (
-        params.data &&
         params.data.map((element, index) => (
           <>
             <tr key={index}>
