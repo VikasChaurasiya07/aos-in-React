@@ -22,6 +22,7 @@ body {
   margin: 1rem;
   padding: 1.3rem;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 p {
@@ -30,7 +31,81 @@ p {
   margin-bottom: 0.3rem;
 }
 
+.modal {
+  width: 1000px;
+  height: 600px;
+  position: absolute;
+  z-index: 999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0c0a09;
+  border: 0.1px solid grey;
+  border-radius: 5px;
+  padding: 2rem;
+}
+
 .center {
   text-align: center;
   padding-bottom: 1rem;
 }
+
+
+h1 {
+  text-align: center;
+  margin: 1rem;
+}
+
+button {
+  padding: 0.4rem 0.6rem;
+  outline: none;
+  border: none;
+  border-radius: 500px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin: 0.6rem;
+}
+
+.pagni {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  all: unset;
+  padding: 0.4rem 0.6rem;
+  outline: none;
+  border: none;
+  border-radius: 500px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.6rem;
+}
+
+
+/* Style the table */
+table {
+  margin-top: 2rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style the table headers */
+th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style the table body rows */
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
