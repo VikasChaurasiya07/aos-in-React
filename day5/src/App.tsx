@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 type TaskType = 'CREATED_TOY' | 'WRAPPED_PRESENT'
 
@@ -23,10 +27,14 @@ function App() {
   const [data, setData] = useState<Task[]>([]);
   const [elfs, setElfs] = useState<Set<string>>();
   const [elfsob, setElfsob] = useState<Details[]>([]);
+  const [elfcur, setElfCur] = useState<Details>({});
 
   const [showModal, setShowModal] = useState(false);
   const [currentElf, setCurrentElf] = useState<Task[]>([]);
+  const [pageelf, setPageelf] = useState<Task[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
+  const [dasboard, setDasboard] = useState(true);
 
   useEffect(() => {
     dataFetch();
@@ -88,21 +96,45 @@ function App() {
 
   }, [data])
 
+
+  useEffect(() => {
+    function pagination() {
+      const pagesize = 12;
+      const startIndex = currentPage * pagesize;
+      const endIndex = startIndex + pagesize;
+      const pagItems = currentElf.slice(startIndex, endIndex);
+
+      setPageelf(pagItems)
+    }
+
+    pagination()
+  }, [currentElf, currentPage])
+
   async function dataFetch() {
     const res = await fetch('https://advent.sveltesociety.dev/data/2023/day-five.json')
     const resData = await res.json();
     setData(resData)
   }
 
-function pagination(pageNumber: number) {
-    const pagesize = 15;
-    const startIndex = pageNumber * pagesize;
-    const endIndex = startIndex + pagesize;
-    const pagItems = currentElf.slice(startIndex, endIndex);
 
-    console.log(pagItems)
-
-}
+  const chartdata = {
+    labels: ['Created Total', 'Wapped Total'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [elfcur.CREATED_TOY_TOTAL, elfcur.WRAPPED_PRESENT_TOTAL],
+        backgroundColor: [
+          'rgba(255, 99, 132)',
+          'rgba(54, 162, 235)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132)',
+          'rgba(54, 162, 235)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
 
   return (
@@ -116,7 +148,8 @@ function pagination(pageNumber: number) {
               onClick={() => {
                 setShowModal(true);
                 setCurrentElf(data.filter((elfs) => elfs.elf == item.name));
-                pagination(1)
+                setCurrentPage(0)
+                setElfCur(item)
               }}
             >
               <p className="center"><b>{item.name}</b></p>
@@ -129,39 +162,76 @@ function pagination(pageNumber: number) {
         <div>
           {showModal && createPortal(
             <div className="modal">
-              <table>
-                <thead>
-                  <tr>
-                    <th>name</th>
-                    <th>task</th>
-                    <th>minutestaken</th>
-                    <th>date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    currentElf.map((item) => (
-                      <tr>
-                        <td>{item.elf}</td>
-                        <td>{item.task}</td>
-                        <td>{item.minutesTaken}</td>
-                        <td>{item.date}</td>
-                      </tr>
-                    ))
-                  }
-                </tbody>
-              </table>
+              <span
+                onClick={() => {
+                  setDasboard(true)
+                }}
+              >Dasboard</span>
 
-              <div className="pagni">
-                <button
+              <span
+                onClick={() => {
+                  setDasboard(false)
+                }}
+              >Data</span>
 
-                >{`←`}</button>
-              
-                <button
+              {
+                dasboard ?
 
-                >{`→`}</button>
-              </div>
-  
+                  <>
+                    <h2>{elfcur.name}</h2>
+                    <div className="details-wrapper">
+
+                      <div className="details-work">
+                        <p>Total Toys created - {elfcur.CREATED_TOY_TOTAL}</p>
+                        <p>Total Wrap Presents - {elfcur.WRAPPED_PRESENT_TOTAL}</p>
+                        <p>Total Minutes Worked - {elfcur.minutesTotalWorked}</p>
+                      </div>
+
+                      <div className="details-chart">
+                        <Doughnut data={chartdata} />
+                      </div>
+
+                    </div>
+                  </>
+                  :
+                  <>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>name</th>
+                          <th>task</th>
+                          <th>minutestaken</th>
+                          <th>date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          pageelf.map((item) => (
+                            <tr>
+                              <td>{item.elf}</td>
+                              <td>{item.task}</td>
+                              <td>{item.minutesTaken}</td>
+                              <td>{item.date}</td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+
+                    <div className="pagni">
+                      <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage == 0}
+                      >{`←`}</button>
+
+                      <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={pageelf.length + 1 < 12}
+                      >{`→`}</button>
+                    </div>
+                  </>
+              }
+
               <button
                 className="close"
                 onClick={() => {
