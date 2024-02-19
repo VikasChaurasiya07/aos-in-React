@@ -10,3 +10,27 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.card-div {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.cards {
+  background-color: #1c1917;
+  width: 300px;
+  height: 100px;
+  margin: 1rem;
+  padding: 1.3rem;
+  border-radius: 5px;
+}
+
+p {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.center {
+  text-align: center;
+  padding-bottom: 1rem;
+}
